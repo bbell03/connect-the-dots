@@ -69,19 +69,19 @@ function App() {
     canvas.current = new fabric.Canvas('c', {
       height: 800,
       width: 800,
-      backgroundColor: 'pink'
+      backgroundColor: 'black'
     });
     console.log(canvas.current);
     // canvas.current = initCanvas();
-    if (canvas) {
-      canvas.current.add(makeLine(50, 10, 200, 150));
-    }
+    // if (canvas) {
+    //   canvas.current.add(makeLine(50, 10, 200, 150));
+    // }
 
 
-    for (var i = 0; i < 1; i++) {
+    for (var i = 0; i < 13; i++) {
 
-      for (var n = 0; n < 2; n++) {
-          var random_color = 'blue'
+      for (var n = 0; n < 13; n++) {
+          var random_color = 'white'
           var circ = new fabric.Circle({
               id: (i * 2) + n,
               in: false,
@@ -159,8 +159,8 @@ function App() {
   return (
 
     <div className="App">
-      <h1>Fabric Canvas</h1>
-      <h3>Dots and a Line</h3>
+      <h1 class="text">Fabric Canvas</h1>
+      <h3 class="text">Dots and a Line</h3>
       <canvas id="c"></canvas>
     </div>
   );
