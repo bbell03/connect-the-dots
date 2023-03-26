@@ -1,70 +1,162 @@
-# Getting Started with Create React App
+# connect-the-dots
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Reverse Engineering & Application Development**
 
-## Available Scripts
+by Brandon
 
-In the project directory, you can run:
+I was asked to make a simple connect the dots ui for React and React Native. I am starting with Fabric because I found a neat example reference and am looking to translate the functionality to React JS for the sake of familiarity and personal reference and finally to react-native svg for ease of use on mobile os.
 
-### `npm start`
+Inspired by https://github.com/deepsheth/connect-the-dots-game
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+I think the idea is to use the parts of the application connect-the-dots-game I see myself needing. To identify the necessary parts of the program for repurposing I must understand the code, at least the parts that I need and anything required for them to run. I must also take special consideration to understand any ramifications of translating the code or adapting any implementations to React from regular JavaScript. Some strategies that might be helpful include annotating the code, running code snippets in isolation or in parallel across platforms, and starting with a base case or simplified version of the problem I am looking to solve.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Converting a vanilla JavaScript app into a React app involves breaking down the original app into smaller components that can be managed more easily. Each component should have its own state, and changes to the state should trigger re-renders of the component. The original app's functions and logic can be translated into the React components and their associated methods. Additionally, third-party libraries and frameworks may need to be replaced with React-specific alternatives, or modified to work with React (Notion AI).
 
-### `npm test`
+[Part 1: Fabric.js on React - fabric.Canvas(‘…’)](https://aprilescobar.medium.com/part-1-fabric-js-on-react-fabric-canvas-e4094e4d0304)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Good place to start:
 
-### `npm run build`
+**BASE CASE PROBLEM** : Minimum Viable Solution (drawing parallels from connect-the-dots game)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- connect 2 dots using mouse events
+- upon clicking one dot, make a line starting from the center point of the dot, and extend it dynamically to the cursor’s position
+- upon click release, if the cursor position is aligned with the area of another dot, the line snaps to the center point of this dot, connecting the 2 dots’ centers otherwise the line is deleted
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+fabric js simple makeLine
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```jsx
+function makeLine(x_start, x_end, y_start, y_end) {
+  let line = new fabric.Line([x_start, x_end, y_start, y_end], {
+    stroke: 'green'
+  });
 
-### `npm run eject`
+  return line
+}
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Necessary Work
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- make dots
+    - save or get center point
+- mouse events
+    - make line
+- write snap conditions
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+[https://github.com/deepsheth/connect-the-dots-game](https://github.com/deepsheth/connect-the-dots-game)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Organize Sections Key:
 
-## Learn More
+- Structures and Scopes
+    - Global Variables
+    - Formal Variables
+- JS + Object Methods + Properties
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+[https://www.javascripttutorial.net/web-apis/javascript-draw-line/](https://www.javascripttutorial.net/web-apis/javascript-draw-line/)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+refer to below components for relevant mouse events
 
-### Code Splitting
+**Structures & Scopes:**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+**Global Variables:**
 
-### Analyzing the Bundle Size
+- *color_scheme*
+- *CANVAS_SIZE*
+- *grid*
+- *CIRCLES_PER_ROW*
+- *linked_list*
+- *lockLine*
+- *currentCircle*
+- *line*
+- *isDown*
+- *lineExists*
+- *totalLines*
+- *activeColor*
+- *allLines*
+- *gameOver*
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+**JS + Library Objects and Properties:**
 
-### Making a Progressive Web App
+- *$(document).ready(function() {});*
+- *initModal();*
+- *fabric.Canvas(’’) initialization and properties ie. canvas.propertyFunc();*
+    - canvas.on()
+        - mouse:down
+        - mouse:out
+        - mouse:move
+    - canvas.add()
+    - canvas.renderAll();
+    - canvas.getPointer();
+- fabric.Circle({}) initialization and properties ie. circle.propertyFunc();
+    - id
+    - in
+    - out
+    - left
+    - top
+    - radius
+    - fill
+    - strokeWidth
+    - stroke
+    - originX
+    - originY
+    - centeredRotation
+    - selectable
+- fabric.line(args) initialization and properties ie fabric.propertyFunc();
+    - strokeWidth,
+    - stroke,
+    - originX
+    - originY
+    - remove
+- *Math.floor, Math.Random & Math.abs in context*
+- *e.target.setStroke(’’), e.target.getFill(), e.target.getCenterPoint(); → bindings to e and callback properties…*
+- object.prototype
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+**Custom Functions:**
 
-### Advanced Configuration
+- getColumnsToAddDotsTo()
+- removeSelectedDots
+- updateScore
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+**********Control Data Structures:**********
 
-### Deployment
+- for loop create grid
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+********************************Data Structures:********************************
 
-### `npm run build` fails to minify
+- Node
+    - DoublyList → linked list with a head and a tail
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+**Look Further Into:**
+
+- **$(document).ready(function () {}** like componentDidMount for JQuery
+
+- ****************initModal()****************
+
+- **canvas →** fabric.js, use cases and properties
+    - object:modified at the end of a transform or any change when statefull is true
+    - object:rotating while an object is being rotated from the control
+    - object:scaling while an object is being scaled by controls
+    - object:moving while an object is being dragged
+    - object:skewing while an object is being skewed from the controls
+    - before:transform before a transform is is started
+    - before:selection:cleared
+    - selection:cleared
+    - selection:updated
+    - selection:created
+    - path:created after a drawing operation ends and the path is added
+    - mouse:down
+    - mouse:move
+    - mouse:up
+    - mouse:down:before on mouse down,event: before the inner fabric logic runs
+    - mouse:move:before on mouse move,event: before the inner fabric logic runs
+    - mouse:up:before on mouse up,event: before the inner fabric logic runs
+    - mouse:over
+    - mouse:out
+    - mouse:dblclick whenever a native dbl click event fires on the canvas.
+    - event:dragover
+    - event:dragenter
+    - event:dragleave
+    - drop:before before drop event. same native event.event: This is added to handle edge cases
+    - event:drop
+    - after:render at the end of the render process,event: receives the context in the callback
+    - before:render at start the render process,event: receives the context in the callback
+    - event handlers relating to mouse move and click
