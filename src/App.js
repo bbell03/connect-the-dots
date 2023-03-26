@@ -78,9 +78,9 @@ function App() {
     // }
 
 
-    for (var i = 0; i < 13; i++) {
+    for (var i = 0; i < 1; i++) {
 
-      for (var n = 0; n < 13; n++) {
+      for (var n = 2; n < 4; n++) {
           var random_color = 'white'
           var circ = new fabric.Circle({
               id: (i * 2) + n,
@@ -152,15 +152,15 @@ function App() {
     new fabric.Canvas('c', {
       height: 800,
       width: 800,
-      backgroundColor: 'pink'
-    })
+      backgroundColor: 'black'
+    });
   };
 
   return (
 
     <div className="App">
       <h1 class="text">Fabric Canvas</h1>
-      <h3 class="text">Dots and a Line</h3>
+      <h3 class="text">Dots</h3>
       <canvas id="c"></canvas>
     </div>
   );
