@@ -16,7 +16,7 @@ Converting a vanilla JavaScript app into a React app involves breaking down the 
 
 Good place to start:
 
-BASE CASE PROBLEM : Minimum Viable Solution (drawing parallels from connect-the-dots game)
+Minimum Viable Solution (drawing parallels from connect-the-dots game)
 
 - connect 2 dots using mouse events
 - upon clicking one dot, make a line starting from the center point of the dot, and extend it dynamically to the cursor’s position
@@ -49,7 +49,7 @@ Organize Sections Key:
 - Structures and Scopes
     - Global Variables
     - Formal Variables
-- JS + Object Methods + Properties
+- JS + Classes + Objects + Methods + Properties
 
 [https://www.javascripttutorial.net/web-apis/javascript-draw-line/](https://www.javascripttutorial.net/web-apis/javascript-draw-line/)
 

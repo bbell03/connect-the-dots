@@ -1,3 +1,7 @@
+//why does connec-the-dots-game use doubly list instead of
+//regular linked list or array
+
+
 function Node(value) {
     this.id = value;
     this.previous = null;
