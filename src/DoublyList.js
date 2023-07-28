@@ -14,6 +14,12 @@ function DoublyList() {
     this.tail = null;
 }
 
+DoublyList.prototype.clear = function() {
+    this._length = 0;
+    this.head = null;
+    this.tail = null;
+}
+
 DoublyList.prototype.add = function (value) {
     var node = new Node(value);
 

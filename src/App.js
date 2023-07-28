@@ -15,7 +15,7 @@ var line; // current line being moved around
 var isDown; // if the mouse is down (dragging line)
 var lineExists = false; // At least one line exists
 var totalLines = 0; // total number of lines connecting dots
-var activeColor = "#000"; // color of active line
+var activeColor = "#FFF"; // color of active line
 var allLines = []; // array of all drawn lines
 // var gameOver = false;
 
@@ -60,13 +60,50 @@ function makeLine(x_start, x_end, y_start, y_end) {
 
 // }
 
+//https://aprilescobar.medium.com/part-1-fabric-js-on-react-fabric-canvas-e4094e4d0304
+
+// const App = () => {
+//   const [canvas, setCanvas] = useState('');  useEffect(() => {
+//     setCanvas(initCanvas());
+//   }, []);  const initCanvas = () => (
+//     new fabric.Canvas('canvas', {
+//       height: 800,
+//       width: 800,
+//       backgroundColor: 'pink'
+//     })
+//   )  
+//   return(
+//     <div>
+//       <h1>Fabric.js on React - fabric.Canvas('...')</h1>
+//       <canvas id="canvas" />
+//     </div>
+//   );
+// }
+
 
 function App() {
   // const [canvas, setCanvas] = useState('');
   let canvas = React.createRef();
   //try using state instead of ref see if it makes
   //a difference with the callback functions
-  useEffect(() => {
+
+
+  // function handleClick() {
+  //   canvas.current.clear();
+  //   //?
+  //   // linked_list.clear();
+    
+  //   linked_list = new DoublyList();
+  //   allLines = [];
+  //   totalLines = 0;
+  //   lineExists = false;
+  //   canvasLogic();
+  // }
+
+  useEffect(() => {canvasLogic()});
+
+  function canvasLogic() {
+  // useEffect(() => {
     canvas.current = new fabric.Canvas('c', {
       height: 800,
       width: 800,
@@ -79,9 +116,9 @@ function App() {
     // }
 
 
-    for (var i = 0; i < 1; i++) {
+    for (var i = 0; i < 5; i++) {
 
-      for (var n = 2; n < 4; n++) {
+      for (var n = 4; n < 9; n++) {
           var random_color = 'white'
           var circ = new fabric.Circle({
               id: (i * 2) + n,
@@ -110,16 +147,17 @@ function App() {
               if (e.target) {
                 console.log("e.target");
                 console.log(e.target);
-                e.target.setStroke('white');
-                e.target.setStrokeWidth(5);
-                console.log('after e.target');
+                // e.target.setStroke('white');
+                // e.target.setStrokeWidth(5);
+                // console.log('after e.target');
               }
 
               // Line exists as soon as user begins dragging
               // Snaps line to a circle that is hovered over, this can only occur when the user is dragging so isDown needs to be true
               if (line) {
-
-                  if (e.target.getFill() == line.getStroke() && isDown) {
+                  // e.target.getFill() == 
+                  // line.getStroke() && 
+                  if (isDown) {
 
                       lockLine = true;
                       line.set({
@@ -185,7 +223,7 @@ function App() {
             if (e.target) {
               console.log("e.target");
               console.log(e.target);
-              e.target.setStroke('rgba(0,0,0,0)');
+              // e.target.setStroke('rgba(0,0,0,0)');
               lockLine = false;
              canvas.current.renderAll();
            }
@@ -245,7 +283,9 @@ function App() {
   //   console.log(o);
   // });
 
-  }, []);
+}
+
+  // }, [canvas.current]);
 
 
   // const initCanvas = () => {
@@ -262,6 +302,7 @@ function App() {
       <h1 class="text">Fabric Canvas</h1>
       <h3 class="text">Dots</h3>
       <canvas id="c"></canvas>
+      {/* <button onClick={handleClick}>Clear Canvas</button> */}
     </div>
   );
 }
