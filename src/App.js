@@ -23,6 +23,10 @@ var allLines = []; // array of all drawn lines
 // var gameOver = false;
 
 function addNewDots(coordsToGenerateDots, canvas) {
+    console.log("canvas in add");
+    console.log(canvas);
+    console.log("coordsToGenerateDots");
+    console.log(coordsToGenerateDots);
     for (var i = 0; i < coordsToGenerateDots.length; i++) {
 
         var random_color = Math.floor(Math.random() * (color_scheme.length - 0)) + 0;
@@ -61,9 +65,15 @@ function addNewDots(coordsToGenerateDots, canvas) {
 }
 
 function removeSelectedDots(canvas) {
+    console.log("removeSelectedDots start");
+    console.log("canvas in remove");
+    console.log(canvas);
     var coordsToGenerateDots = [];
 
     // Remove selected dots
+    console.log("console log function");
+    console.log(canvas.forEachObject(function(obj) {console.log(obj);}));
+    console.log("lalala");
     canvas.forEachObject(function (obj) {
         if (linked_list._length <= 1) return;
 
@@ -373,45 +383,46 @@ function App() {
 
   });
 
-  // canvas.current.on('mouse:up', function (o) {
-  //     isDown = false;
-  //
-  //     // If mouse/line is let go on top of empty canvas and not a circle, delete the line
-  //     if (o.target === null) {
-  //         line.remove();
-  //     }
-  //
-  //     // otherwise, the mouse/line was released on a circle, and we much error check the line
-  //     else {
-  //         console.log(line);
-  //         // First if statement snaps/locks line with the same colored dot
-  //         // Diagonal lines are not allowed
-  //         if (line.x2 != line.x1 && line.y2 != line.y1) {
-  //             console.log("Diagonal lines are not allowed.");
-  //             line.remove();
-  //         }
-  //         // Lines can only be one unit long -- prevents line from streching across multiple dots
-  //         else if (Math.abs(line.x2 - line.x1) > grid || Math.abs(line.y2 - line.y1) > grid) {
-  //             console.log("Lines can only be one unit long");
-  //             lockLine = false;
-  //             line.remove();
-  //         }
-  //     }
-  //
-  //
-  //
-  //     // var activeDotsColumns = getColumnsToAddDotsTo(linked_list, CIRCLES_PER_ROW);
-  //     // console.log(activeDotsColumns);
-  //     // var dotsToAddPerColumn = shiftDotsDown(activeDotsColumns);
-  //     // console.log(dotsToAddPerColumn);
-  //     var coordsToGenerateDots = removeSelectedDots(canvas.current);
-  //     addNewDots(coordsToGenerateDots, canvas.current);
-  //     console.log(coordsToGenerateDots);
-  //
-  //
-  //
-  //
-  // });
+  canvas.current.on('mouse:up', function (o) {
+      isDown = false;
+  
+      // If mouse/line is let go on top of empty canvas and not a circle, delete the line
+      if (o.target === null) {
+          line.remove();
+      }
+  
+      // otherwise, the mouse/line was released on a circle, and we much error check the line
+      else {
+          console.log(line);
+          // First if statement snaps/locks line with the same colored dot
+          // Diagonal lines are not allowed
+          if (line.x2 != line.x1 && line.y2 != line.y1) {
+              console.log("Diagonal lines are not allowed.");
+              line.remove();
+          }
+          // Lines can only be one unit long -- prevents line from streching across multiple dots
+          else if (Math.abs(line.x2 - line.x1) > grid || Math.abs(line.y2 - line.y1) > grid) {
+              console.log("Lines can only be one unit long");
+              lockLine = false;
+              line.remove();
+          }
+      }
+  
+  
+  
+      // var activeDotsColumns = getColumnsToAddDotsTo(linked_list, CIRCLES_PER_ROW);
+      // console.log(activeDotsColumns);
+      // var dotsToAddPerColumn = shiftDotsDown(activeDotsColumns);
+      // console.log(dotsToAddPerColumn);
+      console.log("before add remove function calls");
+      var coordsToGenerateDots = removeSelectedDots(canvas.current);
+      addNewDots(coordsToGenerateDots, canvas.current);
+      console.log(coordsToGenerateDots);
+  
+  
+  
+  
+  });
 
 }
 
