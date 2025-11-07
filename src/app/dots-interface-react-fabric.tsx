@@ -43,16 +43,30 @@ const COLOR_SCHEMES = {
     ]
 };
 
+// Type definitions
+type CircleWithTracking = Circle & { 
+    id: number; 
+    in: boolean; 
+    out: boolean;
+    fill?: string;
+};
+
 // Simple linked list structure (from script.js)
+type DoublyListNode = {
+    id: number;
+    previous: DoublyListNode | null;
+    next: DoublyListNode | null;
+};
+
 class DoublyList {
     _length: number = 0;
-    head: any = null;
-    tail: any = null;
+    head: DoublyListNode | null = null;
+    tail: DoublyListNode | null = null;
 
-    add(value: number) {
-        const node = { id: value, previous: null, next: null };
+    add(value: number): DoublyListNode {
+        const node: DoublyListNode = { id: value, previous: null, next: null };
 
-        if (this._length) {
+        if (this._length && this.tail) {
             this.tail.next = node;
             node.previous = this.tail;
             this.tail = node;
@@ -129,9 +143,10 @@ const DotsInterface = () => {
                 });
 
                 // Add tracking properties
-                (circle as any).id = circleId;
-                (circle as any).in = false;
-                (circle as any).out = false;
+                const circleWithTracking = circle as CircleWithTracking;
+                circleWithTracking.id = circleId;
+                circleWithTracking.in = false;
+                circleWithTracking.out = false;
 
                 circles.push(circle);
                 fabricCanvas.add(circle);
@@ -146,7 +161,7 @@ const DotsInterface = () => {
         // Mouse over - handles hover and line snapping
         fabricCanvas.on('mouse:over', (e) => {
             if (e.target && e.target instanceof Circle) {
-                const target = e.target as Circle & { id?: number; in?: boolean; out?: boolean };
+                const target = e.target as CircleWithTracking;
                 
                 // Hover effect
                 target.set({
@@ -246,7 +261,7 @@ const DotsInterface = () => {
         // Mouse down - start line drawing
         fabricCanvas.on('mouse:down', (e) => {
             if (e.target && e.target instanceof Circle) {
-                const target = e.target as Circle & { id?: number; in?: boolean; out?: boolean; fill?: string };
+                const target = e.target as CircleWithTracking;
                 
                 if (target.fill) {
                     // If line color already exists, it cannot be changed (unless debug mode)
@@ -383,6 +398,7 @@ const DotsInterface = () => {
                 fabricCanvas.off('mouse:up');
             }
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [colorScheme, debugMode]);
 
     // Cleanup on unmount
